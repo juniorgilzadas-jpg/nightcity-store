@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NightCity Store - FiveM</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--bg2:#0f1217;--bg3:#151920;--surf:#1a1f28;--surf2:#1f2535;--ac:#00e5ff;--ac2:#7c3aed;--ac3:#f59e0b;--red:#ef4444;--gr:#10b981;--tx:#e2e8f0;--mu:#64748b;--br:rgba(0,229,255,0.12);--br2:rgba(0,229,255,0.25)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,229,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.wrap{position:relative;z-index:1}
+header{background:rgba(10,12,15,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--br);padding:0 1.5rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:64px;gap:.5rem}
+.logo{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:2px;flex-shrink:0}
+.logo span{color:var(--ac);text-shadow:0 0 18px var(--ac)}
+.logo small{font-size:.58rem;color:var(--mu);display:block;letter-spacing:4px;margin-top:-3px}
+.hr{display:flex;align-items:center;gap:.6rem}
+.dbtn{display:flex;align-items:center;gap:6px;background:#5865F2;color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:.8rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:'Exo 2',sans-serif}
+.cbtn{position:relative;background:var(--surf);border:1px solid var(--br2);color:var(--tx);padding:7px 13px;border-radius:7px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:5px}
+.cbtn:hover{border-color:var(--ac)}
+.cct{background:var(--ac);color:var(--bg);border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;position:absolute;top:-5px;right:-5px}
+.abtn{background:linear-gradient(135deg,var(--ac2),#9f67f8);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Exo 2',sans-serif}
+.bind{display:flex;align-items:center;gap:5px;font-size:.74rem;font-weight:600;padding:5px 10px;border-radius:100px;border:1px solid;cursor:pointer}
+.bon{border-color:var(--gr);color:var(--gr);background:rgba(16,185,129,.1)}
+.boff{border-color:var(--mu);color:var(--mu);background:rgba(100,116,139,.08)}
+.bdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.don{background:var(--gr);box-shadow:0 0 5px var(--gr);animation:pu 2s infinite}
+.doff{background:var(--mu)}
+@keyframes pu{0%,100%{opacity:1}50%{opacity:.3}}
+.hero{padding:4.5rem 1.5rem 2.5rem;text-align:center}
+.htag{display:inline-flex;align-items:center;gap:6px;background:rgba(0,229,255,.08);border:1px solid var(--br2);border-radius:100px;padding:5px 14px;font-size:.7rem;color:var(--ac);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:1.2rem}
+h1.ht{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,5vw,4.5rem);font-weight:700;line-height:1;letter-spacing:2px;margin-bottom:.8rem}
+h1.ht .l2{color:var(--ac);text-shadow:0 0 30px rgba(0,229,255,.4)}
+.hsub{color:var(--mu);font-size:.95rem;max-width:460px;margin:0 auto 1.5rem;line-height:1.65}
+.hst{display:flex;justify-content:center;gap:2.5rem;margin-top:1.5rem}
+.hst .sn{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ac);text-align:center}
+.hst .sl{font-size:.7rem;color:var(--mu);letter-spacing:1px;text-transform:uppercase;text-align:center}
+.pbanner{margin:0 1.5rem 1.8rem;background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(0,229,255,.08));border:1px solid rgba(124,58,237,.38);border-radius:11px;padding:.8rem 1.4rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
+.pbd{background:var(--ac3);color:var(--bg);font-weight:700;font-size:.68rem;border-radius:3px;padding:2px 7px;letter-spacing:1px}
+.pt{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--ac)}
+.flt{padding:0 1.5rem 1.5rem;display:flex;gap:7px;flex-wrap:wrap}
+.fb{background:var(--surf);border:1px solid var(--br);color:var(--mu);padding:6px 16px;border-radius:100px;cursor:pointer;font-size:.8rem;font-family:'Exo 2',sans-serif;transition:all .2s;font-weight:500}
+.fb:hover,.fb.on{border-color:var(--ac);color:var(--ac);background:rgba(0,229,255,.08)}
+.pg{padding:0 1.5rem 3.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:1.2rem}
+.pc{background:var(--surf);border:1px solid var(--br);border-radius:11px;overflow:hidden;transition:all .3s;cursor:pointer}
+.pc:hover{border-color:var(--ac);box-shadow:0 0 22px rgba(0,229,255,.1),0 6px 24px rgba(0,0,0,.4);transform:translateY(-3px)}
+.pc.isp{border-color:rgba(245,158,11,.32)}
+.ci{height:145px;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(135deg,var(--bg2),var(--surf2))}
+.cbg{position:absolute;top:8px;right:8px;font-size:.62rem;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:3px;text-transform:uppercase}
+.bp{background:var(--ac3);color:var(--bg)}.bn{background:var(--gr);color:var(--bg)}.bh{background:var(--red);color:#fff}.be{background:var(--mu);color:#fff}
+.cb{padding:1rem}
+.cc2{font-size:.68rem;color:var(--ac);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:4px}
+.ct2{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:600;margin-bottom:4px}
+.cd2{font-size:.78rem;color:var(--mu);line-height:1.5;margin-bottom:.8rem}
+.cp2{display:flex;align-items:center;gap:8px;margin-bottom:.8rem}
+.pm{font-family:'Rajdhani',sans-serif;font-size:1.45rem;font-weight:700;color:var(--ac)}
+.po{font-size:.83rem;color:var(--mu);text-decoration:line-through}
+.ca{display:flex;gap:6px}
+.badd{flex:1;background:var(--ac);color:var(--bg);border:none;border-radius:6px;padding:8px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif;transition:all .2s}
+.badd:hover{box-shadow:0 0 15px rgba(0,229,255,.4)}
+.badd:disabled{background:var(--mu);cursor:not-allowed;box-shadow:none}
+.bdet{background:transparent;border:1px solid var(--br2);color:var(--tx);border-radius:6px;padding:8px 11px;cursor:pointer;font-size:.8rem;transition:all .2s}
+.bdet:hover{border-color:var(--ac);color:var(--ac)}
+</style><style>
+.mo{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.86);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+.mo.open{display:flex}
+.mb{background:var(--bg2);border:1px solid var(--br2);border-radius:13px;width:100%;max-width:490px;max-height:88vh;overflow-y:auto;position:relative}
+.mx{position:absolute;top:.8rem;right:.8rem;background:var(--surf);border:1px solid var(--br);color:var(--tx);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.88rem;display:flex;align-items:center;justify-content:center;z-index:2}
+.mi{font-size:4.2rem;text-align:center;padding:1.6rem 0 .8rem}
+.mbd{padding:0 1.3rem 1.3rem}
+.mc{font-size:.7rem;color:var(--ac);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:.4rem}
+.mt2{font-family:'Rajdhani',sans-serif;font-size:1.65rem;font-weight:700;margin-bottom:.4rem}
+.md2{color:var(--mu);line-height:1.65;margin-bottom:1.2rem;font-size:.9rem}
+.mf{list-style:none;margin-bottom:1.2rem;display:flex;flex-direction:column;gap:6px}
+.mf li{display:flex;align-items:center;gap:7px;font-size:.87rem}
+.mf li::before{content:'';width:5px;height:5px;background:var(--ac);border-radius:50%;flex-shrink:0}
+.mpr{font-family:'Rajdhani',sans-serif;font-size:2.2rem;font-weight:700;color:var(--ac);margin-bottom:1.2rem}
+.mpr .op{font-size:.9rem;color:var(--mu);text-decoration:line-through;margin-left:8px}
+.bbuy{width:100%;background:var(--ac);color:var(--bg);border:none;border-radius:8px;padding:12px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif;letter-spacing:2px;transition:all .2s}
+.bbuy:hover{box-shadow:0 0 25px rgba(0,229,255,.5)}
+.csd{display:none;position:fixed;right:0;top:0;bottom:0;width:100%;max-width:390px;z-index:300;background:var(--bg2);border-left:1px solid var(--br2);flex-direction:column}
+.csd.open{display:flex}
+.chd{padding:1.2rem;border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between}
+.chd h3{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700}
+.cits{flex:1;overflow-y:auto;padding:.8rem;display:flex;flex-direction:column;gap:7px}
+.cit{background:var(--surf);border:1px solid var(--br);border-radius:8px;padding:.85rem;display:flex;align-items:center;gap:9px}
+.cion{font-size:1.7rem;flex-shrink:0}
+.ciin{flex:1}
+.cin{font-weight:600;font-size:.87rem;margin-bottom:1px}
+.cip{color:var(--ac);font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700}
+.crm{background:none;border:none;color:var(--mu);cursor:pointer;font-size:1.1rem}
+.crm:hover{color:var(--red)}
+.cft{padding:1.2rem;border-top:1px solid var(--br)}
+.ctot{display:flex;justify-content:space-between;margin-bottom:.9rem;font-size:1rem}
+.ctot strong{font-family:'Rajdhani',sans-serif;font-size:1.35rem;color:var(--ac)}
+.bchk{width:100%;background:var(--ac);color:var(--bg);border:none;border-radius:8px;padding:12px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif;letter-spacing:2px;margin-bottom:8px}
+.cem{text-align:center;padding:2.5rem;color:var(--mu);font-size:.87rem}
+.fg{margin-bottom:.85rem}
+.fg label{display:block;font-size:.74rem;color:var(--mu);letter-spacing:1px;margin-bottom:5px;text-transform:uppercase}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--surf);border:1px solid var(--br);color:var(--tx);border-radius:7px;padding:9px 12px;font-size:.87rem;font-family:'Exo 2',sans-serif;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ac)}
+.fg textarea{resize:vertical;min-height:72px;background:var(--surf)}
+.fg select option{background:var(--surf)}
+.osum{background:var(--surf);border-radius:8px;padding:.85rem;margin:.85rem 0}
+.or{display:flex;justify-content:space-between;font-size:.82rem;padding:3px 0}
+.or.tot{border-top:1px solid var(--br);margin-top:7px;padding-top:7px;font-weight:600}
+.or.tot span:last-child{color:var(--ac);font-family:'Rajdhani',sans-serif;font-size:1.1rem}
+.chkf{padding:1.3rem}
+.chkf h3{font-family:'Rajdhani',sans-serif;font-size:1.35rem;font-weight:700;margin-bottom:1.2rem}
+.sscr{text-align:center;padding:2.5rem 1.2rem}
+.sscr .si{font-size:3.5rem;margin-bottom:.8rem}
+.sscr h3{font-family:'Rajdhani',sans-serif;font-size:1.65rem;font-weight:700;color:var(--gr);margin-bottom:.4rem}
+.sscr p{color:var(--mu);font-size:.87rem;line-height:1.6}
+.oid{font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--ac);margin-top:.9rem;letter-spacing:2px}
+</style><style>
+.ap{display:none;position:fixed;inset:0;z-index:500;background:var(--bg);overflow-y:auto}
+.ap.open{display:block}
+.ahd{background:var(--bg2);border-bottom:1px solid var(--br);padding:.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.ahd h2{font-family:'Rajdhani',sans-serif;font-size:1.25rem;font-weight:700}
+.acn{padding:1.6rem;max-width:1050px;margin:0 auto}
+.ats{display:flex;gap:6px;margin-bottom:1.6rem;flex-wrap:wrap}
+.tb{background:var(--surf);border:1px solid var(--br);color:var(--mu);padding:7px 17px;border-radius:7px;cursor:pointer;font-size:.8rem;font-family:'Exo 2',sans-serif;font-weight:500}
+.tb.on{background:rgba(0,229,255,.1);border-color:var(--ac);color:var(--ac)}
+.tc{display:none}
+.tc.on{display:block}
+.ac{background:var(--surf);border:1px solid var(--br);border-radius:10px;padding:1.3rem;margin-bottom:1.3rem}
+.ac h4{font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.85rem;color:var(--ac)}
+.sr{display:flex;gap:.85rem;flex-wrap:wrap}
+.sr .fg{flex:1;min-width:185px}
+.bs{background:var(--gr);color:var(--bg);border:none;border-radius:7px;padding:9px 20px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif}
+.bd{background:#5865F2;color:#fff;border:none;border-radius:7px;padding:9px 17px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Exo 2',sans-serif}
+.bd:hover{background:#4752c4}
+.ba{background:var(--ac);color:var(--bg);border:none;border-radius:7px;padding:9px 17px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif}
+.bda{background:var(--red);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-size:.76rem;font-weight:600;cursor:pointer;font-family:'Exo 2',sans-serif}
+.hn{font-size:.72rem;color:var(--mu);margin-top:3px;line-height:1.4}
+.otb{width:100%;border-collapse:collapse;font-size:.8rem}
+.otb th{text-align:left;padding:7px 10px;border-bottom:1px solid var(--br);color:var(--mu);font-size:.7rem;text-transform:uppercase;letter-spacing:1px}
+.otb td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.04)}
+.otb tr:hover td{background:rgba(0,229,255,.03)}
+.sb{padding:2px 8px;border-radius:3px;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.sp2{background:rgba(245,158,11,.15);color:var(--ac3)}
+.sd{background:rgba(16,185,129,.15);color:var(--gr)}
+.asr{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:.85rem;margin-bottom:1.6rem}
+.ast{background:var(--surf);border:1px solid var(--br);border-radius:8px;padding:.85rem;text-align:center}
+.ast .n{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;color:var(--ac)}
+.ast .l{font-size:.7rem;color:var(--mu);text-transform:uppercase;letter-spacing:1px}
+.apg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.85rem;margin-bottom:1.2rem}
+.api{background:var(--bg3);border:1px solid var(--br);border-radius:8px;padding:.85rem;display:flex;align-items:center;gap:8px}
+.apii2{flex:1}
+.apin{font-weight:600;font-size:.87rem}
+.apip{color:var(--ac);font-size:.82rem;font-family:'Rajdhani',sans-serif}
+.bcard{background:linear-gradient(135deg,rgba(88,101,242,.14),rgba(0,229,255,.07));border:1px solid rgba(88,101,242,.38);border-radius:10px;padding:1.3rem;margin-bottom:1.3rem;display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap}
+.bav{width:56px;height:56px;border-radius:50%;border:2px solid #5865F2;background:var(--surf2);display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0;overflow:hidden}
+.bav img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.bin2{flex:1}
+.bnm{font-family:'Rajdhani',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:1px}
+.bsb{font-size:.77rem;color:var(--mu)}
+.bbd{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.bb{font-size:.67rem;padding:2px 8px;border-radius:3px;font-weight:600}
+.bbon{background:rgba(16,185,129,.15);color:var(--gr);border:1px solid rgba(16,185,129,.28)}
+.bbof{background:rgba(100,116,139,.15);color:var(--mu);border:1px solid rgba(100,116,139,.28)}
+.bbsv{background:rgba(88,101,242,.15);color:#818cf8;border:1px solid rgba(88,101,242,.28)}
+.stps{display:flex;flex-direction:column;gap:10px}
+.stp{display:flex;gap:.85rem;align-items:flex-start}
+.stpn{background:var(--ac);color:var(--bg);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.92rem;width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.stpt{font-size:.85rem;line-height:1.6}
+.stpt a{color:var(--ac);text-decoration:none}
+.stpt code{background:rgba(0,229,255,.08);color:var(--ac);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:.83em}
+.pbs{display:flex;gap:6px;flex-wrap:wrap}
+.pb{padding:7px 12px;border:1px solid var(--br);border-radius:7px;cursor:pointer;font-size:.77rem;font-family:'Exo 2',sans-serif;font-weight:600;background:var(--surf);color:var(--tx)}
+.pon2{border-color:var(--gr);color:var(--gr);background:rgba(16,185,129,.1)}
+.pidle{border-color:var(--ac3);color:var(--ac3);background:rgba(245,158,11,.1)}
+.pdnd{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.1)}
+.pinv{border-color:var(--mu);color:var(--mu);background:rgba(100,116,139,.1)}
+.mpv{background:var(--bg3);border:1px solid var(--br);border-radius:7px;padding:.85rem;margin-top:.85rem;font-size:.8rem}
+.mpvl{font-size:.67rem;color:var(--mu);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.mpvc2{color:var(--tx);line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.sas{display:flex;gap:7px;flex-wrap:wrap;margin-top:.85rem}
+.qbs{display:flex;gap:7px;flex-wrap:wrap}
+.div{height:1px;background:var(--br);margin:1.2rem 0}
+.tw{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:6px}
+.t2{background:var(--surf);border:1px solid var(--br2);border-radius:8px;padding:10px 15px;font-size:.8rem;max-width:310px;animation:sli .28s ease}
+.tok{border-color:var(--gr)}.ter{border-color:var(--red)}
+@keyframes sli{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:580px){header{padding:0 .8rem}.logo small{display:none}.hero{padding:2.5rem .8rem 2rem}.hst{gap:1.2rem}.pg{padding:0 .8rem 3rem;grid-template-columns:1fr}.flt{padding:0 .8rem 1.2rem}.pbanner{margin:0 .8rem 1.3rem}.acn{padding:.8rem}.sr{flex-direction:column}.csd{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">NIGHT<span>CITY</span><br><small>FIVEM STORE</small></div>
+  <div class="hr">
+    <div class="bind boff" id="bind" onclick="openAP();gTab('bot')">
+      <span class="bdot doff" id="bd"></span><span id="bst">Bot Offline</span>
+    </div>
+    <a href="#" class="dbtn" id="dlink" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      Discord
+    </a>
+    <button class="cbtn" onclick="togCart()">&#x1F6D2; Carrinho<span class="cct" id="cct">0</span></button>
+    <button class="abtn" onclick="openAP()">&#x2699; Admin</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="htag">&#x26A1; Servidor Online</div>
+  <h1 class="ht"><span>BEM VINDO A</span><br><span class="l2">LOJA OFICIAL</span></h1>
+  <p class="hsub">Os melhores itens, veiculos e servicos para sua experiencia no servidor. Compras rapidas com entrega automatica.</p>
+  <div class="hst">
+    <div><div class="sn" id="stp">12</div><div class="sl">Produtos</div></div>
+    <div><div class="sn" id="sto">247</div><div class="sl">Pedidos</div></div>
+    <div><div class="sn">24/7</div><div class="sl">Suporte</div></div>
+  </div>
+</div>
+
+<div class="pbanner">
+  <div><span class="pbd">PROMOCAO</span><p style="margin-top:3px;font-size:.88rem;font-weight:500">VIP Gold com <strong style="color:var(--ac3)">50% OFF</strong> por tempo limitado!</p></div>
+  <div class="pt" id="pti">23:47:12</div>
+</div>
+
+<div class="flt">
+  <button class="fb on" onclick="filt('t',this)">Todos</button>
+  <button class="fb" onclick="filt('vip',this)">VIP</button>
+  <button class="fb" onclick="filt('veiculos',this)">Veiculos</button>
+  <button class="fb" onclick="filt('armas',this)">Armas</button>
+  <button class="fb" onclick="filt('casas',this)">Casas</button>
+  <button class="fb" onclick="filt('dinheiro',this)">Dinheiro</button>
+</div>
+<div class="pg" id="pg"></div>
+</div>
+
+<div class="mo" id="pmo"><div class="mb"><button class="mx" onclick="cPM()">&#x2715;</button><div class="mi" id="mi"></div><div class="mbd"><div class="mc" id="mca"></div><div class="mt2" id="mti"></div><div class="md2" id="mde"></div><ul class="mf" id="mfe"></ul><div class="mpr" id="mpr2"></div><button class="bbuy" id="mbu">ADICIONAR AO CARRINHO</button></div></div></div>
+
+<div class="mo" id="ckmo"><div class="mb"><button class="mx" onclick="cCM()">&#x2715;</button><div id="ckb"></div></div></div>
+
+<div class="csd" id="csd"><div class="chd"><h3>&#x1F6D2; Carrinho</h3><button onclick="togCart()" style="background:none;border:none;color:var(--mu);cursor:pointer;font-size:1.1rem">&#x2715;</button></div><div class="cits" id="cits"></div><div class="cft" id="cft"></div></div>
+
+<div class="ap" id="ap">
+  <div class="ahd"><h2>&#x2699; Admin - NightCity Store</h2><button onclick="cAP()" style="background:var(--surf);border:1px solid var(--br);color:var(--tx);padding:7px 13px;border-radius:7px;cursor:pointer;font-family:'Exo 2',sans-serif">&#x2715; Fechar</button></div>
+  <div class="acn">
+    <div class="asr" id="asr"></div>
+    <div class="ats">
+      <button class="tb on" id="tb-bot" onclick="sTab('bot',this)">&#x1F916; Bot Discord</button>
+      <button class="tb" id="tb-p" onclick="sTab('p',this)">&#x1F4E6; Produtos</button>
+      <button class="tb" id="tb-o" onclick="sTab('o',this)">&#x1F4CB; Pedidos</button>
+      <button class="tb" id="tb-c" onclick="sTab('c',this)">&#x2699; Config</button>
+    </div>
+
+    <div class="tc on" id="tc-bot">
+      <div class="bcard">
+        <div class="bav" id="bav">&#x1F916;</div>
+        <div class="bin2"><div class="bnm" id="bnm">Bot Desconectado</div><div class="bsb" id="bsb">Configure o token abaixo</div><div class="bbd" id="bbd"><span class="bb bbof">&#x25CF; Offline</span></div></div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="bs" onclick="chkB()" style="font-size:.77rem;padding:7px 13px">&#x1F504; Verificar</button>
+          <button class="bd" onclick="reconB()" style="font-size:.77rem;padding:7px 13px">&#x1F501; Reconectar</button>
+        </div>
+      </div>
+
+      <div class="ac">
+        <h4>&#x1F680; Como Configurar o Bot</h4>
+        <div class="stps">
+          <div class="stp"><div class="stpn">1</div><div class="stpt">Acesse <a href="https://discord.com/developers/applications" target="_blank">discord.com/developers/applications</a> &rarr; New Application &rarr; de um nome ao bot.</div></div>
+          <div class="stp"><div class="stpn">2</div><div class="stpt">Va em <strong>Bot</strong> &rarr; Add Bot &rarr; clique <strong>Reset Token</strong> e copie o token gerado.</div></div>
+          <div class="stp"><div class="stpn">3</div><div class="stpt">Em Bot ative: <strong>Server Members Intent</strong> e <strong>Message Content Intent</strong>.</div></div>
+          <div class="stp"><div class="stpn">4</div><div class="stpt">Em <strong>OAuth2 &rarr; URL Generator</strong>: marque <code>bot</code> + permissoes <code>Send Messages</code> e <code>Embed Links</code>. Copie a URL gerada e convide o bot ao seu servidor Discord.</div></div>
+          <div class="stp"><div class="stpn">5</div><div class="stpt"><strong>Online gratis:</strong> suba a pasta <code>bot/</code> no <a href="https://render.com" target="_blank">Render.com</a> (plano free) e o site no <a href="https://pages.github.com" target="_blank">GitHub Pages</a>. Guia completo no arquivo <code>DEPLOY.md</code>.</div></div>
+          <div class="stp"><div class="stpn">6</div><div class="stpt">Cole a URL da API (ex: <code>https://seu-bot.onrender.com</code>) no campo abaixo, salve o token no Render e use <strong>UptimeRobot</strong> para manter o bot acordado 24h (gratis).</div></div>
+        </div>
+      </div>
+
+      <div class="ac">
+        <h4>&#x1F511; Token e URL da API</h4>
+        <div class="sr">
+          <div class="fg" style="flex:2"><label>Token do Bot</label><input type="password" id="btk" placeholder="MTxxxxxx.Gyyyyy.zzzzzz"/><div class="hn">&#x26A0; Nunca compartilhe esse token com ninguem!</div></div>
+          <div class="fg"><label>URL da API (onde bot.js roda)</label><input type="text" id="burl" value="http://localhost:3001"/><div class="hn">Padrao: http://localhost:3001</div></div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:.5rem">
+          <button class="bs" onclick="savBC()">&#x1F4BE; Salvar e Enviar ao Bot</button>
+          <button class="bd" onclick="chkB()">&#x1F50C; Testar Conexao</button>
+        </div>
+      </div>
+
+      <div class="ac">
+        <h4>&#x1F4E2; Canais Discord (IDs)</h4>
+        <p style="color:var(--mu);font-size:.82rem;margin-bottom:.85rem">Ative o <strong>Modo Desenvolvedor</strong> no Discord (Configuracoes &rarr; Avancado) &rarr; clique direito no canal &rarr; <strong>Copiar ID do Canal</strong>.</p>
+        <div class="sr">
+          <div class="fg"><label>&#x1F6D2; Canal de Compras (ID)</label><input type="text" id="cch" placeholder="123456789012345678"/><div class="hn">Notificacoes automaticas de pedidos</div></div>
+          <div class="fg"><label>&#x1F4E3; Canal de Promocoes (ID)</label><input type="text" id="cph" placeholder="123456789012345678"/><div class="hn">Anuncios de novos produtos e promos</div></div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:.5rem">
+          <button class="bs" onclick="savCh()">&#x1F4BE; Salvar Canais</button>
+          <button class="bd" onclick="tstCh('c')">&#x1F9EA; Testar Compras</button>
+          <button class="bd" onclick="tstCh('p')">&#x1F9EA; Testar Promos</button>
+        </div>
+      </div>
+
+      <div class="ac">
+        <h4>&#x1F3AE; Status do Bot</h4>
+        <div class="sr" style="margin-bottom:.85rem">
+          <div class="fg"><label>Tipo</label><select id="sty"><option value="playing">&#x1F3AE; Jogando</option><option value="watching">&#x1F440; Assistindo</option><option value="listening">&#x1F3A7; Ouvindo</option><option value="competing">&#x1F3C6; Competindo</option></select></div>
+          <div class="fg" style="flex:2"><label>Texto do Status</label><input type="text" id="stx" placeholder="NightCity RP | loja.exemplo.com"/></div>
+        </div>
+        <div style="margin-bottom:.85rem">
+          <label style="font-size:.73rem;color:var(--mu);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:7px">Presenca</label>
+          <div class="pbs">
+            <button class="pb pon2" id="pb-o" onclick="selP('online',this)">&#x1F7E2; Online</button>
+            <button class="pb" id="pb-i" onclick="selP('idle',this)">&#x1F7E1; Ausente</button>
+            <button class="pb" id="pb-d" onclick="selP('dnd',this)">&#x1F534; Nao Perturbar</button>
+            <button class="pb" id="pb-v" onclick="selP('invisible',this)">&#x26AB; Invisivel</button>
+          </div>
+        </div>
+        <button class="ba" onclick="apySt()">&#x26A1; Aplicar Status Agora</button>
+      </div>
+
+      <div class="ac">
+        <h4>&#x2709; Enviar Mensagem com o Bot</h4>
+        <p style="color:var(--mu);font-size:.82rem;margin-bottom:.85rem">Envie qualquer mensagem para qualquer canal usando o bot &mdash; alem das notificacoes automaticas de compras.</p>
+        <div class="sr">
+          <div class="fg"><label>ID do Canal Destino</label><input type="text" id="mch" placeholder="123456789012345678"/></div>
+          <div class="fg" style="flex:2"><label>Mensagem (texto livre)</label><textarea id="mtx" placeholder="@everyone sua mensagem aqui... Suporta mencoes e emojis!"></textarea></div>
+        </div>
+        <div class="div"></div>
+        <p style="font-size:.82rem;color:var(--mu);margin-bottom:.7rem">Ou envie um <strong>Embed</strong> personalizado (card colorido):</p>
+        <div class="sr">
+          <div class="fg"><label>Titulo do Embed</label><input type="text" id="eti" placeholder="Anuncio Importante"/></div>
+          <div class="fg"><label>Cor (hex)</label><input type="text" id="eco" value="#00e5ff"/></div>
+        </div>
+        <div class="fg"><label>Descricao do Embed</label><textarea id="ede" placeholder="Texto do embed... **negrito**, *italico*, `codigo`"></textarea></div>
+        <div class="sas">
+          <button class="ba" onclick="sndM()">&#x1F4E8; Enviar Mensagem</button>
+          <button class="bd" onclick="sndE()">&#x1F3A8; Enviar como Embed</button>
+          <button onclick="prvM()" style="background:var(--surf);border:1px solid var(--br);color:var(--tx);border-radius:7px;padding:8px 13px;cursor:pointer;font-size:.8rem;font-family:'Exo 2',sans-serif">&#x1F441; Preview</button>
+        </div>
+        <div class="mpv" id="mpv" style="display:none"><div class="mpvl">Preview</div><div class="mpvc2" id="mpvc"></div></div>
+      </div>
+
+      <div class="ac">
+        <h4>&#x26A1; Anuncios Rapidos</h4>
+        <div class="qbs">
+          <button class="bd" onclick="qSnd('promo')">&#x1F525; Promocao</button>
+          <button class="bd" onclick="qSnd('novo')">&#x2728; Novo Produto</button>
+          <button class="bd" onclick="qSnd('manut')">&#x1F527; Manutencao</button>
+          <button class="bd" onclick="qSnd('evento')">&#x1F389; Evento</button>
+          <button class="bd" onclick="qSnd('reboot')">&#x1F504; Reboot Servidor</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tc" id="tc-p">
+      <div class="ac">
+        <h4>&#x2795; Adicionar Produto</h4>
+        <div class="sr">
+          <div class="fg"><label>Icone (emoji)</label><input type="text" id="ni" placeholder="&#x1F697;"/></div>
+          <div class="fg"><label>Nome</label><input type="text" id="nn" placeholder="Nome do produto"/></div>
+          <div class="fg"><label>Categoria</label><select id="nc"><option value="vip">VIP</option><option value="veiculos">Veiculos</option><option value="armas">Armas</option><option value="casas">Casas</option><option value="dinheiro">Dinheiro</option></select></div>
+        </div>
+        <div class="sr">
+          <div class="fg"><label>Preco (R$)</label><input type="number" id="np" placeholder="29.90"/></div>
+          <div class="fg"><label>Preco Antigo</label><input type="number" id="no" placeholder="59.90"/></div>
+          <div class="fg"><label>Badge</label><select id="nb"><option value="">Nenhuma</option><option value="novo">Novo</option><option value="promo">Promocao</option><option value="hot">Hot</option></select></div>
+        </div>
+        <div class="fg"><label>Descricao</label><input type="text" id="nd" placeholder="Descricao do produto..."/></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:.5rem">
+          <button class="bs" onclick="addP()">&#x2795; Adicionar</button>
+          <button class="bd" onclick="addAnn()">&#x1F4E3; Adicionar e Anunciar no Discord</button>
+        </div>
+      </div>
+      <div class="ac"><h4>&#x1F4E6; Produtos Atuais</h4><div class="apg" id="apl"></div></div>
+    </div>
+
+    <div class="tc" id="tc-o">
+      <div class="ac"><h4>&#x1F4CB; Historico de Pedidos</h4>
+        <table class="otb"><thead><tr><th>ID</th><th>Jogador</th><th>Itens</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead><tbody id="otb2"></tbody></table>
+      </div>
+    </div>
+
+    <div class="tc" id="tc-c">
+      <div class="ac"><h4>&#x1F3D9; Configuracoes do Servidor</h4>
+        <div class="sr">
+          <div class="fg"><label>Nome do Servidor</label><input type="text" id="cgn" placeholder="NightCity RP"/></div>
+          <div class="fg"><label>IP FiveM</label><input type="text" id="cgi" placeholder="cfx.re/join/xxx"/></div>
+        </div>
+        <div class="sr">
+          <div class="fg"><label>Link Discord</label><input type="text" id="cgd" placeholder="https://discord.gg/..."/></div>
+          <div class="fg"><label>Chave PIX</label><input type="text" id="cgp" placeholder="chave@pix.com"/></div>
+        </div>
+        <button class="bs" onclick="savCfg()" style="margin-top:.5rem">&#x1F4BE; Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tw" id="tw"></div>
+<script src="config.js"></script>
+<script>
+var BU=function(){
+  var s=localStorage.getItem('bu');
+  if(s)return s.replace(/\/$/,'');
+  if(window.NIGHTCITY_API)return String(window.NIGHTCITY_API).replace(/\/$/,'');
+  return 'http://localhost:3001';
+};
+var prods=[
+  {id:1,ic:'&#x1F451;',nm:'VIP Bronze',cat:'vip',pr:9.90,ds:'Acesso VIP Bronze com beneficios exclusivos.',ft:['Cargo VIP Discord','Tag no servidor','2x XP 30 dias','Garagem VIP'],bg:'novo',sk:true},
+  {id:2,ic:'&#x1F48E;',nm:'VIP Gold',cat:'vip',pr:14.90,op:29.90,ds:'Melhor custo-beneficio! VIP Gold premium.',ft:['Tudo do Bronze','Kit armas VIP','Carro exclusivo','Prioridade no servidor'],bg:'promo',sk:true},
+  {id:3,ic:'&#x1F31F;',nm:'VIP Diamante',cat:'vip',pr:39.90,ds:'O topo do servidor. Beneficios maximos.',ft:['Tudo do Gold','Casa exclusiva','3 carros exclusivos','Canal privado Discord'],bg:'hot',sk:true},
+  {id:4,ic:'&#x1F697;',nm:'Adder (Bugatti)',cat:'veiculos',pr:19.90,ds:'O lendario Adder. Um dos carros mais rapidos.',ft:['Entrega instantanea','Garagem permanente','350km/h'],bg:'',sk:true},
+  {id:5,ic:'&#x1F3CE;',nm:'Zentorno (Lambo)',cat:'veiculos',pr:24.90,ds:'Supercar premium com desempenho incrivel.',ft:['Entrega instantanea','Garagem permanente','Turbo incluso'],bg:'novo',sk:true},
+  {id:6,ic:'&#x1F681;',nm:'Buzzard (Helicoptero)',cat:'veiculos',pr:34.90,ds:'Domine os ares com o Buzzard de ataque.',ft:['Entrega na cobertura','Metralhadora inclusa','Misseis'],bg:'hot',sk:true},
+  {id:7,ic:'&#x1F52B;',nm:'Pack Armas Basico',cat:'armas',pr:12.90,ds:'Kit de armas essenciais para comecar.',ft:['Pistola .50','SMG','Rifle basico','100 municoes cada'],bg:'',sk:true},
+  {id:8,ic:'&#x1F4A3;',nm:'Pack Armas Elite',cat:'armas',pr:29.90,ds:'Arsenal completo para os guerreiros da cidade.',ft:['RPG','Minigun','Sniper','500 municoes cada'],bg:'hot',sk:true},
+  {id:9,ic:'&#x1F3E0;',nm:'Apartamento Downtown',cat:'casas',pr:29.90,ds:'Apartamento de luxo no centro da cidade.',ft:['Guarda-roupa','Garagem 2 carros','Ponto de respawn'],bg:'',sk:true},
+  {id:10,ic:'&#x1F3F0;',nm:'Mansao do Morro',cat:'casas',pr:79.90,ds:'A mansao mais exclusiva do servidor.',ft:['Garagem 6 carros','Heliponto','Cofre de dinheiro'],bg:'',sk:false},
+  {id:11,ic:'&#x1F4B5;',nm:'R$500.000 In-Game',cat:'dinheiro',pr:9.90,ds:'Meio milhao in-game. Comece seu imperio!',ft:['Entrega em 5 min','Suporte garantido'],bg:'',sk:true},
+  {id:12,ic:'&#x1F4B0;',nm:'R$2.000.000 In-Game',cat:'dinheiro',pr:29.90,ds:'2 Milhoes para dominar a economia do servidor.',ft:['Entrega em 5 min','Bonus 200k extra'],bg:'promo',sk:true}
+];
+var cart=[],ords=JSON.parse(localStorage.getItem('nco')||'[]'),cf='t',ps='online';
+
+async function bA(path,mth,body){
+  try{
+    var o={method:mth||'GET',headers:{'Content-Type':'application/json'}};
+    if(body)o.body=JSON.stringify(body);
+    var r=await fetch(BU()+path,o);
+    var j=await r.json().catch(function(){return {};});
+    if(!r.ok)return {error:j.error||('Erro HTTP '+r.status)};
+    return j;
+  }catch(e){
+    return {error:'Nao foi possivel conectar em '+BU()+'. Verifique a URL da API (Render) e UptimeRobot.'};
+  }
+}
+async function chkB(){
+  toast('Verificando...','');
+  var d=await bA('/status');
+  if(d.error){bOff();toast(d.error,'err');return;}
+  if(d.online){bOn(d);toast('Bot online: '+d.tag,'ok');}
+  else{bOff();toast('API acessivel mas bot nao logado ainda.','err');}
+}
+function bOn(d){
+  document.getElementById('bind').className='bind bon';
+  document.getElementById('bd').className='bdot don';
+  document.getElementById('bst').textContent='Bot Online';
+  document.getElementById('bnm').textContent=d.tag||'Bot Online';
+  document.getElementById('bsb').textContent='Conectado e funcionando';
+  document.getElementById('bbd').innerHTML='<span class="bb bbon">&#x25CF; Online</span><span class="bb bbsv">&#x1F3E0; '+(d.guilds||0)+' servidores</span>';
+  if(d.avatar)document.getElementById('bav').innerHTML='<img src="'+d.avatar+'">';
+}
+function bOff(){
+  document.getElementById('bind').className='bind boff';
+  document.getElementById('bd').className='bdot doff';
+  document.getElementById('bst').textContent='Bot Offline';
+  document.getElementById('bnm').textContent='Bot Desconectado';
+  document.getElementById('bsb').textContent='Configure o token abaixo';
+  document.getElementById('bbd').innerHTML='<span class="bb bbof">&#x25CF; Offline</span>';
+  document.getElementById('bav').innerHTML='&#x1F916;';
+}
+async function savBC(){
+  var tk=document.getElementById('btk').value.trim();
+  var url=document.getElementById('burl').value.trim();
+  if(url)localStorage.setItem('bu',url);
+  var pl={};
+  if(tk)pl.token=tk;
+  var cc=document.getElementById('cch').value.trim();
+  var cp=document.getElementById('cph').value.trim();
+  if(cc)pl.channelCompras=cc;
+  if(cp)pl.channelPromos=cp;
+  var r=await bA('/config','POST',pl);
+  if(r.error){toast(r.error,'err');return;}
+  toast('Configuracoes enviadas ao bot!','ok');
+  if(tk)setTimeout(chkB,2000);
+}
+async function reconB(){
+  var tk=document.getElementById('btk').value.trim();
+  if(!tk){toast('Cole o token primeiro!','err');return;}
+  var r=await bA('/config','POST',{token:tk});
+  if(r.error){toast(r.error,'err');return;}
+  toast('Token atualizado. Reinicie o bot.js!','ok');
+}
+async function savCh(){
+  var cc=document.getElementById('cch').value.trim(),cp=document.getElementById('cph').value.trim();
+  if(!cc&&!cp){toast('Cole pelo menos um ID!','err');return;}
+  var r=await bA('/config','POST',{channelCompras:cc,channelPromos:cp});
+  if(r.error){toast(r.error,'err');return;}
+  toast('Canais salvos!','ok');
+}
+async function tstCh(t){
+  var id=t==='c'?document.getElementById('cch').value.trim():document.getElementById('cph').value.trim();
+  if(!id){toast('Coloque o ID do canal primeiro!','err');return;}
+  var r=await bA('/send','POST',{channelId:id,message:'Teste NightCity Store - Canal de '+(t==='c'?'Compras':'Promocoes')+' funcionando!'});
+  if(r.error)toast(r.error,'err');else toast('Mensagem enviada no Discord!','ok');
+}
+function selP(p,btn){
+  ps=p;
+  ['pb-o','pb-i','pb-d','pb-v'].forEach(function(x){var b=document.getElementById(x);if(b)b.className='pb';});
+  var m={online:'pon2',idle:'pidle',dnd:'pdnd',invisible:'pinv'};
+  btn.classList.add(m[p]||'pon2');
+}
+async function apySt(){
+  var tx=document.getElementById('stx').value.trim(),ty=document.getElementById('sty').value;
+  if(!tx){toast('Digite o texto do status!','err');return;}
+  var r=await bA('/setstatus','POST',{text:tx,type:ty,presence:ps});
+  if(r.error)toast(r.error,'err');else toast('Status do bot atualizado!','ok');
+}
+async function sndM(){
+  var ch=document.getElementById('mch').value.trim(),tx=document.getElementById('mtx').value.trim();
+  if(!ch||!tx){toast('Preencha canal e mensagem!','err');return;}
+  var r=await bA('/send','POST',{channelId:ch,message:tx});
+  if(r.error)toast(r.error,'err');else{toast('Mensagem enviada!','ok');document.getElementById('mtx').value='';}
+}
+async function sndE(){
+  var ch=document.getElementById('mch').value.trim(),ti=document.getElementById('eti').value.trim(),de=document.getElementById('ede').value.trim(),co=document.getElementById('eco').value.trim();
+  if(!ch||(!ti&&!de)){toast('Preencha canal e embed!','err');return;}
+  var col=parseInt(co.replace('#',''),16)||0x00e5ff;
+  var r=await bA('/send','POST',{channelId:ch,embed:{title:ti||undefined,description:de||undefined,color:col,timestamp:new Date().toISOString()}});
+  if(r.error)toast(r.error,'err');else{toast('Embed enviado!','ok');document.getElementById('eti').value='';document.getElementById('ede').value='';}
+}
+function prvM(){
+  var p=document.getElementById('mpv'),c=document.getElementById('mpvc');
+  var m=document.getElementById('mtx').value,t=document.getElementById('eti').value,d=document.getElementById('ede').value;
+  var h='';if(m)h+='Mensagem:\n'+m+'\n\n';if(t||d)h+='Embed:\n'+(t?t+'\n':'')+(d||'');
+  c.textContent=h||'(Vazio)';p.style.display='block';
+}
+async function qSnd(t){
+  var ch=document.getElementById('cph').value.trim();
+  if(!ch){toast('Configure o Canal de Promocoes primeiro!','err');return;}
+  var M={promo:{title:'PROMOCAO ESPECIAL!',desc:'Promocao incrivel hoje! Acesse a loja antes que acabe!',color:0xf59e0b},novo:{title:'NOVO PRODUTO!',desc:'Novo produto chegou na loja! Seja o primeiro a garantir o seu!',color:0x10b981},manut:{title:'MANUTENCAO PROGRAMADA',desc:'Servidor em manutencao em breve. Voltamos logo!',color:0xef4444},evento:{title:'EVENTO ESPECIAL!',desc:'Evento especial no servidor! Venha participar e ganhar recompensas!',color:0x7c3aed},reboot:{title:'REINICIO DO SERVIDOR',desc:'Servidor sera reiniciado em breve para atualizacoes. Aguardem poucos minutos!',color:0xf59e0b}};
+  var m=M[t];
+  var r=await bA('/send','POST',{channelId:ch,embed:{title:m.title,description:m.desc,color:m.color,timestamp:new Date().toISOString()}});
+  if(r.error)toast(r.error,'err');else toast('Anuncio enviado no Discord!','ok');
+}
+function rnd(f){
+  var g=document.getElementById('pg');
+  var list=f==='t'?prods:prods.filter(function(p){return p.cat===f;});
+  g.innerHTML=list.map(function(p){
+    var bg=p.bg?'<span class="cbg '+(p.bg==='promo'?'bp':p.bg==='novo'?'bn':'bh')+'">'+p.bg.toUpperCase()+'</span>':'';
+    var es=!p.sk?'<span class="cbg be">ESGOTADO</span>':'';
+    return '<div class="pc '+(p.bg==='promo'?'isp':'')+'" onclick="opP('+p.id+')">'
+      +'<div class="ci"><span style="font-size:3rem">'+p.ic+'</span>'+bg+es+'</div>'
+      +'<div class="cb"><div class="cc2">'+p.cat.toUpperCase()+'</div><div class="ct2">'+p.nm+'</div>'
+      +'<div class="cd2">'+p.ds.substring(0,72)+'...</div>'
+      +'<div class="cp2"><span class="pm">R$ '+p.pr.toFixed(2).replace('.',',')+'</span>'+(p.op?'<span class="po">R$ '+p.op.toFixed(2).replace('.',',')+'</span>':'')+'</div>'
+      +'<div class="ca" onclick="event.stopPropagation()">'
+      +'<button class="badd" onclick="addC('+p.id+')" '+(p.sk?'':'disabled')+'>'+(p.sk?'ADICIONAR':'ESGOTADO')+'</button>'
+      +'<button class="bdet" onclick="opP('+p.id+')">VER</button>'
+      +'</div></div></div>';
+  }).join('');
+  document.getElementById('stp').textContent=prods.length;
+}
+function filt(f,btn){cf=f;document.querySelectorAll('.fb').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');rnd(f);}
+function opP(id){
+  var p=prods.find(function(x){return x.id===id;});if(!p)return;
+  document.getElementById('mi').innerHTML=p.ic;
+  document.getElementById('mca').textContent=p.cat.toUpperCase();
+  document.getElementById('mti').textContent=p.nm;
+  document.getElementById('mde').textContent=p.ds;
+  document.getElementById('mfe').innerHTML=p.ft.map(function(f){return '<li>'+f+'</li>';}).join('');
+  document.getElementById('mpr2').innerHTML='R$ '+p.pr.toFixed(2).replace('.',',')+(p.op?'<span class="op">R$ '+p.op.toFixed(2).replace('.',',')+'</span>':'');
+  var b=document.getElementById('mbu');b.disabled=!p.sk;b.textContent=p.sk?'ADICIONAR AO CARRINHO':'ESGOTADO';
+  b.onclick=function(){addC(id);cPM();};
+  document.getElementById('pmo').classList.add('open');
+}
+function cPM(){document.getElementById('pmo').classList.remove('open');}
+function addC(id){
+  var p=prods.find(function(x){return x.id===id;});if(!p||!p.sk)return;
+  var e=cart.find(function(c){return c.id===id;});
+  if(e)e.qty++;else cart.push(Object.assign({},p,{qty:1}));
+  updC();toast(p.nm+' adicionado!','ok');
+}
+function remC(id){cart=cart.filter(function(c){return c.id!==id;});updC();}
+function updC(){
+  var cnt=cart.reduce(function(s,c){return s+c.qty;},0);
+  document.getElementById('cct').textContent=cnt;
+  var ci=document.getElementById('cits'),cf2=document.getElementById('cft');
+  if(!cart.length){ci.innerHTML='<div class="cem"><div style="font-size:2.5rem">&#x1F6D2;</div><p>Carrinho vazio.</p></div>';cf2.innerHTML='';return;}
+  ci.innerHTML=cart.map(function(c){return '<div class="cit"><div class="cion">'+c.ic+'</div><div class="ciin"><div class="cin">'+c.nm+(c.qty>1?' x'+c.qty:'')+'</div><div class="cip">R$ '+(c.pr*c.qty).toFixed(2).replace('.',',')+'</div></div><button class="crm" onclick="remC('+c.id+')">&#x2715;</button></div>';}).join('');
+  var tot=cart.reduce(function(s,c){return s+c.pr*c.qty;},0);
+  cf2.innerHTML='<div class="ctot"><span>Total</span><strong>R$ '+tot.toFixed(2).replace('.',',')+'</strong></div><button class="bchk" onclick="opCk()">FINALIZAR COMPRA &#x26A1;</button><button onclick="cart=[];updC()" style="width:100%;background:none;border:none;color:var(--mu);cursor:pointer;font-size:.77rem;padding:6px">Limpar</button>';
+}
+function togCart(){document.getElementById('csd').classList.toggle('open');}
+function opCk(){
+  if(!cart.length)return;
+  var tot=cart.reduce(function(s,c){return s+c.pr*c.qty;},0);
+  var rows=cart.map(function(c){return '<div class="or"><span>'+c.ic+' '+c.nm+' x'+c.qty+'</span><span>R$ '+(c.pr*c.qty).toFixed(2).replace('.',',')+'</span></div>';}).join('');
+  document.getElementById('ckb').innerHTML='<div class="chkf"><h3>&#x1F4B3; Finalizar Compra</h3><div class="fg"><label>Seu Nome (Discord)</label><input type="text" id="xn" placeholder="SeuNome#0000"/></div><div class="fg"><label>ID FiveM</label><input type="text" id="xi" placeholder="1234"/></div><div class="fg"><label>Pagamento</label><select id="xp"><option value="pix">PIX</option><option value="mp">Mercado Pago</option><option value="pp">PayPal</option></select></div><div class="osum">'+rows+'<div class="or tot"><span>TOTAL</span><span>R$ '+tot.toFixed(2).replace('.',',')+'</span></div></div><button class="bbuy" onclick="confO()">&#x2705; CONFIRMAR PEDIDO</button></div>';
+  document.getElementById('ckmo').classList.add('open');
+}
+function cCM(){document.getElementById('ckmo').classList.remove('open');}
+async function confO(){
+  var nm=document.getElementById('xn').value.trim(),fi=document.getElementById('xi').value.trim(),py=document.getElementById('xp').value;
+  if(!nm||!fi){toast('Preencha todos os campos!','err');return;}
+  var oid='NC'+Date.now().toString().slice(-6);
+  var tot=cart.reduce(function(s,c){return s+c.pr*c.qty;},0);
+  var ord={id:oid,player:nm,fivemId:fi,items:cart.slice(),total:tot,payment:py,date:new Date().toLocaleString('pt-BR'),status:'pending'};
+  ords.unshift(ord);localStorage.setItem('nco',JSON.stringify(ords));
+  var cc=document.getElementById('cch').value.trim();
+  if(cc){
+    var il=ord.items.map(function(i){return '> '+i.ic+' '+i.nm+' x'+i.qty+' - R$ '+(i.pr*i.qty).toFixed(2);}).join('\n');
+    await bA('/send','POST',{channelId:cc,embed:{title:'&#x1F6D2; Nova Compra!',description:il,color:0x00e5ff,fields:[{name:'Jogador',value:nm,inline:true},{name:'ID FiveM',value:String(fi),inline:true},{name:'Pagamento',value:py.toUpperCase(),inline:true},{name:'Total',value:'R$ '+tot.toFixed(2),inline:true},{name:'Pedido',value:oid,inline:true}],timestamp:new Date().toISOString()}});
+  }
+  cart=[];updC();
+  document.getElementById('ckb').innerHTML='<div class="sscr"><div class="si">&#x1F389;</div><h3>Pedido Confirmado!</h3><p>Obrigado <strong>'+nm+'</strong>!<br>Notificacao enviada no Discord.</p><div class="oid">PEDIDO: '+oid+'</div><button class="bbuy" style="margin-top:1.2rem" onclick="cCM()">FECHAR</button></div>';
+  document.getElementById('csd').classList.remove('open');
+  toast('Pedido '+oid+' confirmado!','ok');rOrd();
+}
+function addP(){
+  var ic=document.getElementById('ni').value||'Box',nm=document.getElementById('nn').value.trim(),pr=parseFloat(document.getElementById('np').value),op=parseFloat(document.getElementById('no').value)||undefined,ct=document.getElementById('nc').value,bg=document.getElementById('nb').value,ds=document.getElementById('nd').value.trim()||'Produto exclusivo do servidor.';
+  if(!nm||!pr){toast('Preencha nome e preco!','err');return null;}
+  var p={id:Date.now(),ic:ic,nm:nm,cat:ct,pr:pr,op:op,ds:ds,ft:['Entrega instantanea','Suporte garantido'],bg:bg,sk:true};
+  prods.unshift(p);rnd(cf);rAP();toast('"'+nm+'" adicionado!','ok');
+  ['ni','nn','np','no','nd'].forEach(function(x){document.getElementById(x).value='';});
+  return p;
+}
+async function addAnn(){
+  var p=addP();if(!p)return;
+  var ch=document.getElementById('cph').value.trim();
+  if(!ch){toast('Configure o Canal de Promocoes primeiro!','err');return;}
+  await bA('/send','POST',{channelId:ch,embed:{title:'NOVO PRODUTO!',description:p.ic+' '+p.nm+'\nR$ '+p.pr.toFixed(2)+'\n'+p.ds,color:0x10b981,timestamp:new Date().toISOString()}});
+  toast('Anunciado no Discord!','ok');
+}
+function remP(id){prods=prods.filter(function(p){return p.id!==id;});rnd(cf);rAP();toast('Removido.','ok');}
+function rAP(){document.getElementById('apl').innerHTML=prods.slice(0,12).map(function(p){return '<div class="api"><div style="font-size:1.6rem">'+p.ic+'</div><div class="apii2"><div class="apin">'+p.nm+'</div><div class="apip">R$ '+p.pr.toFixed(2).replace('.',',')+'</div></div><button class="bda" onclick="remP('+p.id+')">&#x2715;</button></div>';}).join('');}
+function rOrd(){
+  var tot=ords.reduce(function(s,o){return s+o.total;},0);
+  document.getElementById('asr').innerHTML='<div class="ast"><div class="n">'+prods.length+'</div><div class="l">Produtos</div></div><div class="ast"><div class="n">'+ords.length+'</div><div class="l">Pedidos</div></div><div class="ast"><div class="n">R$ '+tot.toFixed(0)+'</div><div class="l">Faturamento</div></div><div class="ast"><div class="n">'+ords.filter(function(o){return o.status==='pending';}).length+'</div><div class="l">Pendentes</div></div>';
+  document.getElementById('otb2').innerHTML=ords.slice(0,20).map(function(o){return '<tr><td style="color:var(--ac);font-family:Rajdhani,sans-serif">'+o.id+'</td><td>'+o.player+'</td><td>'+o.items.map(function(i){return i.nm;}).join(', ').substring(0,35)+'</td><td style="color:var(--gr)">R$ '+o.total.toFixed(2)+'</td><td><span class="sb '+(o.status==='pending'?'sp2':'sd')+'">'+(o.status==='pending'?'Pendente':'Concluido')+'</span></td><td style="color:var(--mu);font-size:.77rem">'+o.date+'</td></tr>';}).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--mu);padding:1.8rem">Nenhum pedido.</td></tr>';
+  document.getElementById('sto').textContent=ords.length+247;
+}
+function openAP(){
+  document.getElementById('ap').classList.add('open');
+  var c=JSON.parse(localStorage.getItem('ncc')||'{}');
+  if(c.n)document.getElementById('cgn').value=c.n;
+  if(c.i)document.getElementById('cgi').value=c.i;
+  if(c.d){document.getElementById('cgd').value=c.d;document.getElementById('dlink').href=c.d;}
+  if(c.p)document.getElementById('cgp').value=c.p;
+  document.getElementById('burl').value=localStorage.getItem('bu')||'http://localhost:3001';
+  rAP();rOrd();chkB();
+}
+function cAP(){document.getElementById('ap').classList.remove('open');}
+function sTab(t,btn){
+  document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.tc').forEach(function(x){x.classList.remove('on');});
+  btn.classList.add('on');document.getElementById('tc-'+t).classList.add('on');
+}
+function gTab(t){
+  document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.tc').forEach(function(x){x.classList.remove('on');});
+  var b=document.getElementById('tb-'+t);if(b)b.classList.add('on');
+  var c=document.getElementById('tc-'+t);if(c)c.classList.add('on');
+}
+function savCfg(){
+  var c={n:document.getElementById('cgn').value,i:document.getElementById('cgi').value,d:document.getElementById('cgd').value,p:document.getElementById('cgp').value};
+  localStorage.setItem('ncc',JSON.stringify(c));
+  if(c.d)document.getElementById('dlink').href=c.d;
+  toast('Configuracoes salvas!','ok');
+}
+function toast(msg,type){
+  var w=document.getElementById('tw'),t=document.createElement('div');
+  t.className='t2 '+(type==='ok'?'tok':type==='err'?'ter':'');
+  t.textContent=msg;w.appendChild(t);setTimeout(function(){t.remove();},3500);
+}
+var ts=85632;
+setInterval(function(){ts--;if(ts<0)ts=86400;var h=Math.floor(ts/3600).toString().padStart(2,'0'),m=Math.floor((ts%3600)/60).toString().padStart(2,'0'),s=(ts%60).toString().padStart(2,'0');var e=document.getElementById('pti');if(e)e.textContent=h+':'+m+':'+s;},1000);
+setInterval(function(){if(!document.getElementById('ap').classList.contains('open')){fetch(BU()+'/status').then(function(r){return r.json();}).then(function(d){if(d.online)bOn(d);else bOff();}).catch(function(){bOff();});}},30000);
+setTimeout(function(){fetch(BU()+'/status').then(function(r){return r.json();}).then(function(d){if(d.online)bOn(d);}).catch(function(){});},2000);
+document.getElementById('pmo').addEventListener('click',function(e){if(e.target===this)cPM();});
+document.getElementById('ckmo').addEventListener('click',function(e){if(e.target===this)cCM();});
+rnd('t');updC();
+</script>
+</body>
+</html>
