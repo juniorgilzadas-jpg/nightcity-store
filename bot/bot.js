@@ -17,7 +17,7 @@ const CFG = path.join(__dirname, "config.json");
 function loadCfg() {
   let base = {};
   try { base = JSON.parse(fs.readFileSync(CFG, "utf8")); } catch {}
-  if (process.env.DISCORD_TOKEN)   base.token          = process.env.DISCORD_TOKEN;
+  if (process.env.DISCORD_TOKEN)   base.token          = String(process.env.DISCORD_TOKEN).trim();
   if (process.env.CHANNEL_COMPRAS) base.channelCompras = process.env.CHANNEL_COMPRAS;
   if (process.env.CHANNEL_PROMOS)  base.channelPromos  = process.env.CHANNEL_PROMOS;
   if (process.env.PORT)            base.port           = Number(process.env.PORT);
@@ -52,7 +52,7 @@ function wireClient(c) {
     ready = true;
     loggingIn = false;
     console.log("[BOT] Online como:", c.user.tag);
-    applyStatus();
+    setTimeout(applyStatus, 500);
   });
 
   c.on("error", err => console.error("[BOT] Erro:", err.message));
@@ -76,8 +76,14 @@ async function loginBot() {
   client = createClient();
   wireClient(client);
 
+  const token = String(cfg.token || "").trim();
+  if (!token) {
+    loggingIn = false;
+    console.log("[BOT] Token vazio apos trim.");
+    return;
+  }
   try {
-    await client.login(cfg.token);
+    await client.login(token);
   } catch (e) {
     loggingIn = false;
     ready = false;
@@ -94,13 +100,17 @@ function applyStatus() {
     listening: ActivityType.Listening,
     competing: ActivityType.Competing
   };
-  client.user.setPresence({
-    status: cfg.presenceStatus || "online",
-    activities: [{
-      name: cfg.statusText || "NightCity RP",
-      type: types[cfg.statusType || "playing"] || ActivityType.Playing
-    }]
-  }).catch(() => {});
+  try {
+    client.user.setPresence({
+      status: cfg.presenceStatus || "online",
+      activities: [{
+        name: cfg.statusText || "NightCity RP",
+        type: types[cfg.statusType || "playing"] || ActivityType.Playing
+      }]
+    });
+  } catch (e) {
+    console.error("[BOT] Status:", e.message);
+  }
 }
 
 async function getChannel(id) {
@@ -178,8 +188,13 @@ app.post("/send", async (req, res) => {
 });
 
 app.get("/", (req, res) => res.json({ ok: true, service: "NightCity Bot", online: ready }));
+app.get("/health", (req, res) => res.status(200).send("ok"));
+
+process.on("uncaughtException", err => console.error("[BOT] uncaught:", err.message));
+process.on("unhandledRejection", err => console.error("[BOT] rejection:", err?.message || err));
 
 const PORT = process.env.PORT || cfg.port || 3001;
-app.listen(PORT, "0.0.0.0", () => console.log("[API] Rodando na porta", PORT));
-
-loginBot();
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("[API] Rodando na porta", PORT);
+  setTimeout(loginBot, 1500);
+});

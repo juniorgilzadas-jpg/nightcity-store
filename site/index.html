@@ -395,9 +395,11 @@ h1.ht .l2{color:var(--ac);text-shadow:0 0 30px rgba(0,229,255,.4)}
 <script src="config.js"></script>
 <script>
 var BU=function(){
-  var s=localStorage.getItem('bu');
-  if(s)return s.replace(/\/$/,'');
-  if(window.NIGHTCITY_API)return String(window.NIGHTCITY_API).replace(/\/$/,'');
+  var cfg=(window.NIGHTCITY_API||'').replace(/\/$/,'');
+  var s=(localStorage.getItem('bu')||'').replace(/\/$/,'');
+  if(cfg&&(!s||s.indexOf('localhost')>=0))return cfg;
+  if(s)return s;
+  if(cfg)return cfg;
   return 'http://localhost:3001';
 };
 var prods=[
