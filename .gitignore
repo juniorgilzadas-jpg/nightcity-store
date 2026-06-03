@@ -1,0 +1,6 @@
+node_modules/
+bot/node_modules/
+bot/config.json
+.env
+*.log
+.DS_Store

@@ -1,0 +1,23 @@
+# Deploy gratis no Render.com — https://render.com
+# 1. Crie conta gratis em render.com
+# 2. New > Blueprint > conecte este repositorio GitHub
+# 3. Adicione DISCORD_TOKEN nas variaveis do painel
+
+services:
+  - type: web
+    name: nightcity-bot
+    runtime: node
+    rootDir: bot
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: CHANNEL_COMPRAS
+        sync: false
+      - key: CHANNEL_PROMOS
+        sync: false
